@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div id="home">
+        <div class="navbar">
+            <ul class="nav-items">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About Me</a></li>
+                <li><a href="#">Contacts</a></li>
+            </ul>
+            <h1 id="pageHeader"><a href="#">My top 5 games of all time</a></h1>
+        </div>
+        <div class="container">
+            <div id="about">
+                <h1> A little bit about me</h1>
+                <p>Hi there! I am Paari Laishram. I am a vivid gamer and I have been gaming since i was 12. I remember
+                    playing
+                    native windows XP games like Solitaire on our first laptop that my family bought.
+                    Over the years, my passion for gaming has evolved, and I've encountered countless memorable
+                    experiences. Here is a list of my top five all-time favorite games.</p>
+                <hr>
+            </div>
+            <div class="filter">
+                <p>Sort By</p>
+                <form action='/sort' method="post">
+                    <select name="sortOptions">
+                        <option value="name">Name</option>
+                        <option value="rating">Rating</option>
+                        <option value="releaseDate">Release Date</option>
+                    </select>
+                    <button id="sortingBtn" type="submit">Go</button>
+                </form>
+            </div>
+            <br>
+            <div class="content">
+                <% games.forEach(item=> { %>
+                    <h2>
+                        <%=item.game_name %>
+                    </h2>
+                    <h3>Release Date: <%=item.release_date %>
+                    </h3>
+
+                    <h3>Summary:</h3>
+                    <p>
+                        <%=item.summary %>
+                    </p>
+                    <h3>Review:</h3>
+                    <p class="game-review-para" id="para<%=item.game_id%>">
+                        <%=item.game_review %>
+
+                    </p>
+                    <form action="/edit" method="post">
+                        <input class='update-review' type="hidden" name="gameId" value="<%= item.game_id %>">
+
+                        <textarea class="user-review" id="input<%=item.game_id%>" name="updatedReview"
+                         autofocus="true" hidden="true"><%=item.game_review %></textarea>
+                        <button class="done-btn" id="done<%=item.game_id%>" type="submit" hidden="true">Done</button>
+                    </form>
+                    <button class="edit-review-btn" id="edit<%=item.game_id%>"
+                        onclick="handler('<%=item.game_id%>')">Edit Review</button>
+                    <h3> Rating: <%= item.rating %>
+                    </h3>
+                    <br>
+                    <% }) %>
+            </div>
+
+        </div>
+
+    </div>
+</body>
+<script>
+    function handler(id) {
+        document.getElementById('para' + id).setAttribute('hidden', true)
+        document.getElementById('edit' + id).setAttribute('hidden', true)
+        document.getElementById('input' + id).removeAttribute('hidden')
+        document.getElementById('done' + id).removeAttribute('hidden')
+    }
+</script>
+
+</html>
