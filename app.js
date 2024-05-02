@@ -5,6 +5,8 @@ import axios from 'axios'
 const app = express()
 import igdb from 'igdb-api-node'
 import bodyParser from 'body-parser'
+import env from "dotenv"; 
+env.config();
 
 
 app.use(express.static("public"))
@@ -12,10 +14,10 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 const db = new pg.Client(
     {
-        user: 'postgres',
-        password: 'Baby2031#',
-        host: 'localhost',
-        database: 'games',
+        user: process.env.PG_USER,
+        password: process.env.PG_PASSWORD,
+        host: process.env.PG_HOST,
+        database: process.env.PG_DB,
         port: 5432
     }
 )
@@ -23,8 +25,8 @@ var gameNamesArr = []
 var sortingOptions = ''
 let sortFlag = false
 
-const clientId = 'ymakhzy2vv7gx9vbmrog6d03z1eo6g'
-const clientSecret = 'nk6fajj9bufeq09y7n1fxvm3me4rdf'
+const clientId = process.env.CLIENT_ID
+const clientSecret = process.env.CLIENT_SECRET
 var accessToken = ''
 
 
