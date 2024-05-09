@@ -6,11 +6,13 @@ const app = express()
 import igdb from 'igdb-api-node'
 import bodyParser from 'body-parser'
 import env from "dotenv"; 
+import itemsPool from './DBConfig.js';
+
+
 env.config();
-
-
 app.use(express.static("public"))
 app.use(bodyParser.urlencoded({ extended: false }))
+app.use(express.json())
 
 const db = new pg.Client(
     {
